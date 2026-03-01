@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management - Danh sách sinh viên</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <div class="page-title">
+            <div class="top-note">Student Management System</div>
+            <h1>Danh sách sinh viên</h1>
+            <p>
+                Quản lý hồ sơ sinh viên với giao diện SSR sử dụng Spring Boot + Thymeleaf.
+                Bạn có thể tìm kiếm, xem chi tiết, thêm mới, chỉnh sửa và xóa dữ liệu tại đây.
+            </p>
+        </div>
+
+        <div>
+            <a class="btn btn-primary" th:href="@{/students/new}">+ Thêm mới</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <form class="search-form" th:action="@{/students}" method="get">
+            <div class="field-grow">
+                <label class="label" for="keyword">Tìm kiếm theo tên</label>
+                <input
+                        id="keyword"
+                        class="input"
+                        type="text"
+                        name="keyword"
+                        th:value="${keyword}"
+                        placeholder="Nhập tên sinh viên..."
+                >
+                <div class="helper-text">
+                    Ví dụ: Nguyen, Tran, Le...
+                </div>
+            </div>
+
+            <div style="display:flex; align-items:end; gap:12px; flex-wrap:wrap;">
+                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                <a th:href="@{/students}" class="btn btn-outline">Xóa bộ lọc</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2 class="section-title">Bảng dữ liệu sinh viên</h2>
+
+        <div th:if="${students != null and !#lists.isEmpty(students)}" class="table-wrap">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th style="width: 12%;">ID</th>
+                    <th style="width: 28%;">Họ và tên</th>
+                    <th style="width: 28%;">Email</th>
+                    <th style="width: 12%;">Tuổi</th>
+                    <th style="width: 20%;">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="student : ${students}">
+                    <td th:text="${student.id}">SV001</td>
+                    <td th:text="${student.name}">Nguyen Van A</td>
+                    <td th:text="${student.email}">vana@example.com</td>
+                    <td>
+                        <span
+                                th:if="${student.age < 18}"
+                                class="badge badge-young"
+                                th:text="${student.age + ' tuổi'}">
+                            17 tuổi
+                        </span>
+                        <span
+                                th:if="${student.age >= 18}"
+                                class="badge badge-adult"
+                                th:text="${student.age + ' tuổi'}">
+                            20 tuổi
+                        </span>
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <a class="btn btn-secondary" th:href="@{/students/{id}(id=${student.id})}">
+                                Chi tiết
+                            </a>
+
+                            <a class="btn btn-success" th:href="@{/students/{id}/edit(id=${student.id})}">
+                                Chỉnh sửa
+                            </a>
+
+                            <form class="inline-form"
+                                  th:action="@{/students/{id}/delete(id=${student.id})}"
+                                  method="post"
+                                  onsubmit="return confirm('Bạn có chắc muốn xóa sinh viên này?');">
+                                <button type="submit" class="btn btn-danger">Xóa</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${students == null or #lists.isEmpty(students)}" class="empty-state">
+            <h3>Không tìm thấy sinh viên nào</h3>
+            <p>Hãy thử từ khóa khác hoặc thêm một sinh viên mới.</p>
+        </div>
+
+        <div class="footer-note">
+            Tổng số kết quả:
+            <strong th:text="${students != null ? #lists.size(students) : 0}">0</strong>
+        </div>
+    </div>
+</div>
+</body>
+</html>

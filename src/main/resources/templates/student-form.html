@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management - Form sinh viên</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <div class="page-title">
+            <div class="top-note" th:text="${isEdit} ? 'Edit Student' : 'Create Student'">Create Student</div>
+            <h1 th:text="${isEdit} ? 'Chỉnh sửa sinh viên' : 'Thêm mới sinh viên'">Thêm mới sinh viên</h1>
+            <p th:text="${isEdit} ? 'Cập nhật thông tin hồ sơ sinh viên hiện có.' : 'Nhập thông tin để tạo một hồ sơ sinh viên mới.'">
+                Nhập thông tin sinh viên.
+            </p>
+        </div>
+        <div>
+            <a class="btn btn-outline" th:href="@{/students}">← Quay lại danh sách</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <form th:action="${isEdit} ? @{/students/{id}(id=${student.id})} : @{/students}"
+              th:object="${student}"
+              method="post">
+
+            <div class="form-grid">
+                <div>
+                    <label class="label" for="id">Mã số sinh viên</label>
+                    <input
+                            id="id"
+                            class="input"
+                            type="text"
+                            th:field="*{id}"
+                            placeholder="Ví dụ: SV001"
+                            th:readonly="${isEdit}"
+                    >
+                    <div class="helper-text" th:if="${!isEdit}">
+                        ID là duy nhất và được nhập thủ công.
+                    </div>
+                    <div class="helper-text" th:if="${isEdit}">
+                        Khi chỉnh sửa, mã số sinh viên được giữ nguyên.
+                    </div>
+                    <div class="error-text" th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Lỗi ID</div>
+                </div>
+
+                <div>
+                    <label class="label" for="name">Họ và tên</label>
+                    <input
+                            id="name"
+                            class="input"
+                            type="text"
+                            th:field="*{name}"
+                            placeholder="Nhập họ tên sinh viên"
+                    >
+                    <div class="error-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Lỗi tên</div>
+                </div>
+
+                <div>
+                    <label class="label" for="email">Email</label>
+                    <input
+                            id="email"
+                            class="input"
+                            type="email"
+                            th:field="*{email}"
+                            placeholder="example@student.com"
+                    >
+                    <div class="error-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Lỗi email</div>
+                </div>
+
+                <div>
+                    <label class="label" for="age">Tuổi</label>
+                    <input
+                            id="age"
+                            class="input"
+                            type="number"
+                            min="1"
+                            th:field="*{age}"
+                            placeholder="Nhập tuổi"
+                    >
+                    <div class="error-text" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Lỗi tuổi</div>
+                </div>
+
+                <div class="full">
+                    <div class="btn-row">
+                        <button type="submit" class="btn btn-primary"
+                                th:text="${isEdit} ? 'Lưu thay đổi' : 'Tạo sinh viên'">
+                            Tạo sinh viên
+                        </button>
+
+                        <a class="btn btn-outline" th:href="@{/students}">
+                            Hủy
+                        </a>
+
+                        <a class="btn btn-secondary"
+                           th:if="${isEdit}"
+                           th:href="@{/students/{id}(id=${student.id})}">
+                            Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

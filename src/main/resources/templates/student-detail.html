@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management - Chi tiết sinh viên</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <div class="page-title">
+            <div class="top-note">Student Detail</div>
+            <h1>Chi tiết sinh viên</h1>
+            <p>Trang này hiển thị đầy đủ thông tin hồ sơ của một sinh viên trong hệ thống.</p>
+        </div>
+        <div>
+            <a class="btn btn-outline" th:href="@{/students}">← Quay lại danh sách</a>
+        </div>
+    </div>
+
+    <div class="card" th:if="${student != null}">
+        <h2 class="section-title">Thông tin hồ sơ</h2>
+
+        <div class="detail-grid">
+            <div class="detail-label">Mã số sinh viên</div>
+            <div class="detail-value" th:text="${student.id}">SV001</div>
+
+            <div class="detail-label">Họ và tên</div>
+            <div class="detail-value" th:text="${student.name}">Nguyen Van A</div>
+
+            <div class="detail-label">Email</div>
+            <div class="detail-value" th:text="${student.email}">vana@example.com</div>
+
+            <div class="detail-label">Tuổi</div>
+            <div class="detail-value">
+                <span
+                        th:if="${student.age < 18}"
+                        class="badge badge-young"
+                        th:text="${student.age + ' tuổi - Chưa đủ 18'}">
+                    17 tuổi
+                </span>
+                <span
+                        th:if="${student.age >= 18}"
+                        class="badge badge-adult"
+                        th:text="${student.age + ' tuổi'}">
+                    20 tuổi
+                </span>
+            </div>
+        </div>
+
+        <div class="btn-row" style="margin-top:24px;">
+            <a class="btn btn-success" th:href="@{/students/{id}/edit(id=${student.id})}">
+                Chỉnh sửa
+            </a>
+
+            <form class="inline-form"
+                  th:action="@{/students/{id}/delete(id=${student.id})}"
+                  method="post"
+                  onsubmit="return confirm('Bạn có chắc muốn xóa sinh viên này?');">
+                <button type="submit" class="btn btn-danger">Xóa sinh viên</button>
+            </form>
+
+            <a class="btn btn-outline" th:href="@{/students}">
+                Về danh sách
+            </a>
+        </div>
+    </div>
+
+    <div class="card" th:if="${student == null}">
+        <div class="empty-state">
+            <h3>Không tìm thấy sinh viên</h3>
+            <p>Sinh viên bạn đang tìm có thể không tồn tại hoặc đã bị xóa.</p>
+            <a class="btn btn-primary" th:href="@{/students}">Quay lại danh sách</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
