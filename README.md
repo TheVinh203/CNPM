@@ -1,6 +1,8 @@
 # Student Management System
 DANH SÁCH NHÓM : 
 NÔNG THẾ VINH 2115302
+
+----------------------------------------------------------------
 Ứng dụng quản lý hồ sơ sinh viên được xây dựng bằng **Spring Boot**, **Thymeleaf**, **Spring Data JPA** và **PostgreSQL**.
 
 ## 1. Giới thiệu
@@ -52,3 +54,4 @@ src/main/resources/
     ├── student-detail.html
 
     └── student-form.html
+
