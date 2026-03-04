@@ -12,14 +12,14 @@ A basic web application for managing student profiles, built with **Spring Boot*
 **Faculty:** Faculty of Computer Science and Engineering
 
 ### Group Members
-- **Student 1:** [Full Name] - [Student ID]
+- **Student 1:** Nông Thế Vinh - 2115302
 
 ## 2. Public URL
 
-- **Web Service URL:** [Insert deployed Render URL here]
-- **Example:** `https://student-ws6q.onrender.com`
 
-> Replace this with the actual public URL after completing Lab 5 deployment.
+- `https://student-ws6q.onrender.com`
+
+
 
 ---
 
@@ -504,3 +504,4 @@ A few corrections I made compared with your draft:
 1. a **shorter cleaner README version**, or  
 2. a **Vietnamese README version** that matches the lab document style more closely.
 ```
+
